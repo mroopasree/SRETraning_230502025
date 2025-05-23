@@ -1,0 +1,31 @@
+import time
+import datetime
+import winsound  # For Windows beep sound
+
+def set_alarm():
+    alarm_time = input("Set the alarm time (HH:MM:SS in 24-hour format): ")
+
+    try:
+        alarm_hour, alarm_minute, alarm_second = map(int, alarm_time.split(":"))
+    except ValueError:
+        print("Invalid time format. Please enter time as HH:MM:SS")
+        return
+
+    print(f"Alarm set for {alarm_hour:02d}:{alarm_minute:02d}:{alarm_second:02d}")
+
+    while True:
+        now = datetime.datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+
+        if current_time == alarm_time:
+            print("Wake up! Alarm ringing!")
+            # Beep sound for 5 seconds (Windows only)
+            for _ in range(5):
+                winsound.Beep(1000, 500)  # Frequency 1000Hz, Duration 500ms
+            break
+
+        time.sleep(1)  # Check every second
+
+if __name__ == "__main__":
+    set_alarm()
+    
